@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sultan2728.github.io/amre-kyzmet-servis/sitemap.xml
