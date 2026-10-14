@@ -1,47 +1,15 @@
 /*
  * Блок «Отзывы».
- * Отзывы хранятся в localStorage браузера посетителя (ключ ниже),
- * поэтому работают сразу после публикации сайта без отдельного сервера.
- * Важно: это хранилище локальное для каждого браузера — отзыв, оставленный
- * с одного телефона или компьютера, не появится у другого посетителя.
- * Если нужен общий список отзывов для всех посетителей сайта,
- * потребуется подключить базу данных на сервере.
+ * Отзывы хранятся в общей базе данных Firestore (Firebase), поэтому
+ * отзыв, оставленный одним посетителем, сразу видят все остальные —
+ * список на странице обновляется в реальном времени (без перезагрузки).
  */
 (function () {
-    var STORAGE_KEY = 'aks_reviews_v1';
+    var COLLECTION = 'reviews';
 
-    var seedReviews = [
-        {
-            name: 'Айгерим Т.',
-            rating: 5,
-            text: 'Быстро отреагировали на заявку по отоплению, приехали в тот же день. Спасибо за оперативность!',
-            date: '2026-09-18'
-        },
-        {
-            name: 'Марат Б.',
-            rating: 4,
-            text: 'Во дворе стало чище, регулярно убирают. Хотелось бы ещё освещение возле детской площадки поправить.',
-            date: '2026-08-02'
-        }
-    ];
-
-    function loadReviews() {
-        try {
-            var raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) return JSON.parse(raw);
-        } catch (e) { /* localStorage недоступен — работаем без сохранения */ }
-        return seedReviews.slice();
-    }
-
-    function saveReviews(reviews) {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-        } catch (e) { /* недоступно (приватный режим и т.п.) — тихо игнорируем */ }
-    }
-
-    function formatDate(iso) {
-        var d = new Date(iso + 'T00:00:00');
-        if (isNaN(d.getTime())) return iso;
+    function formatDate(ts) {
+        var d = (ts && typeof ts.toDate === 'function') ? ts.toDate() : null;
+        if (!d) return '';
         return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
@@ -59,31 +27,46 @@
         return div.innerHTML;
     }
 
-    function render() {
+    function renderReviews(docs) {
         var list = document.getElementById('reviewsList');
         if (!list) return;
 
-        var reviews = loadReviews().slice().sort(function (a, b) {
-            return new Date(b.date) - new Date(a.date);
-        });
-
-        if (reviews.length === 0) {
+        if (docs.length === 0) {
             list.innerHTML = '<p class="reviews-empty">Пока нет отзывов — станьте первым!</p>';
             return;
         }
 
-        list.innerHTML = reviews.map(function (r) {
+        list.innerHTML = docs.map(function (doc) {
+            var r = doc.data();
             return (
                 '<div class="review-card">' +
                     '<div class="review-head">' +
-                        '<strong>' + escapeHtml(r.name) + '</strong>' +
-                        '<span class="review-stars">' + starsMarkup(r.rating) + '</span>' +
+                        '<strong>' + escapeHtml(r.name || '') + '</strong>' +
+                        '<span class="review-stars">' + starsMarkup(r.rating || 0) + '</span>' +
                     '</div>' +
-                    '<p class="review-text">' + escapeHtml(r.text) + '</p>' +
-                    '<div class="review-date">' + formatDate(r.date) + '</div>' +
+                    '<p class="review-text">' + escapeHtml(r.text || '') + '</p>' +
+                    '<div class="review-date">' + formatDate(r.createdAt) + '</div>' +
                 '</div>'
             );
         }).join('');
+    }
+
+    function listenReviews() {
+        var list = document.getElementById('reviewsList');
+        if (!list || typeof db === 'undefined') return;
+
+        list.innerHTML = '<p class="reviews-empty">Загрузка отзывов…</p>';
+
+        db.collection(COLLECTION)
+            .orderBy('createdAt', 'desc')
+            .limit(50)
+            .onSnapshot(
+                function (snapshot) { renderReviews(snapshot.docs); },
+                function (err) {
+                    console.error('reviews load error', err);
+                    list.innerHTML = '<p class="reviews-empty">Не удалось загрузить отзывы. Попробуйте обновить страницу.</p>';
+                }
+            );
     }
 
     function initStars() {
@@ -127,27 +110,34 @@
             var name = document.getElementById('reviewName').value.trim();
             var text = document.getElementById('reviewText').value.trim();
             var rating = parseInt(document.getElementById('reviewRating').value, 10) || 5;
+            var submitBtn = form.querySelector('.review-submit');
 
-            if (!name || !text) return;
+            if (!name || !text || typeof db === 'undefined') return;
 
-            var reviews = loadReviews();
-            reviews.push({
-                name: name,
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправка…';
+
+            db.collection(COLLECTION).add({
+                name: name.slice(0, 60),
+                text: text.slice(0, 500),
                 rating: rating,
-                text: text,
-                date: new Date().toISOString().slice(0, 10)
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function () {
+                form.reset();
+                document.getElementById('reviewRating').value = 5;
+                initStars();
+            }).catch(function (err) {
+                console.error('review submit error', err);
+                alert('Не удалось отправить отзыв. Попробуйте ещё раз чуть позже.');
+            }).finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить отзыв';
             });
-            saveReviews(reviews);
-            render();
-
-            form.reset();
-            document.getElementById('reviewRating').value = 5;
-            initStars();
         });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        render();
+        listenReviews();
         initStars();
         initForm();
     });
