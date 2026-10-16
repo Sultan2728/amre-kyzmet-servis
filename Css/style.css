@@ -391,9 +391,9 @@ nav a:hover {
 
 /* ================= DOCUMENTS ================= */
 
-
 .documents {
     background: #f5f6f8;
+    padding: 40px;
 }
 
 .documents-grid {
@@ -413,7 +413,7 @@ nav a:hover {
     gap: 15px;
 
     transition: 0.3s;
-    position: relative; /* оставляем для tooltip */
+    position: relative; /* нужно для tooltip */
 }
 
 .document-card:hover {
@@ -428,10 +428,10 @@ nav a:hover {
     font-size: 15px;
 }
 
-/* Всплывающая карточка */
+/* Tooltip */
 .document-tooltip {
     position: absolute;
-    top: 110%; /* ниже карточки */
+    top: 110%;
     left: 0;
     width: 280px;
     background: #fff;
