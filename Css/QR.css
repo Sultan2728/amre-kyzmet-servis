@@ -25,6 +25,7 @@
 /* ================= QR В МЕНЮ ================= */
 
 .nav-qr {
+    cursor: default;
     position: relative;
     display: flex;
     align-items: center;
