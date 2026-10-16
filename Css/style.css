@@ -722,3 +722,122 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* ================= MOBILE ================= */
+
+/* на сенсорных экранах нет наведения — всплывающий QR не нужен */
+@media (hover: none) {
+    .nav-qr-popup {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* компактная шапка: логотип, ниже строка ссылок, QR в правом верхнем углу */
+    header {
+        position: relative;
+    }
+
+    .header-container {
+        position: relative;
+        padding: 12px 16px 10px;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .logo {
+        font-size: 18px;
+        gap: 10px;
+        align-self: flex-start;
+        max-width: calc(100% - 64px);
+    }
+
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+
+    nav {
+        width: 100%;
+        gap: 4px 4px;
+        justify-content: flex-start;
+    }
+
+    nav a:not(.nav-qr) {
+        font-size: 13px;
+        padding: 8px 8px;
+        flex: 1 1 auto;
+        text-align: center;
+        background: #f1f4f7;
+        border-radius: 8px;
+    }
+
+    nav .nav-qr {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+    }
+
+    nav .nav-qr .nav-qr-code {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* первый экран */
+    .hero {
+        min-height: 420px;
+    }
+
+    .hero-container {
+        padding: 40px 16px;
+    }
+
+    .hero-content span {
+        font-size: 12px;
+    }
+
+    .section {
+        padding: 44px 16px;
+    }
+
+    .section-title {
+        margin-bottom: 28px;
+    }
+
+    .page-hero {
+        padding: 40px 16px;
+    }
+
+    .page-hero h1 {
+        font-size: 30px;
+    }
+
+    /* поля формы: 16px, чтобы iPhone не приближал страницу при вводе */
+    .review-form input[type="text"],
+    .review-form textarea {
+        font-size: 16px;
+    }
+
+    .review-form {
+        padding: 20px 16px;
+    }
+
+    .star-input .star {
+        font-size: 32px;
+        padding: 4px;
+    }
+
+    .review-card {
+        padding: 16px;
+    }
+
+    .footer-container {
+        gap: 8px;
+    }
+
+    footer {
+        padding: 28px 16px;
+    }
+}
