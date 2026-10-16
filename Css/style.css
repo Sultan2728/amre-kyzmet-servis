@@ -391,6 +391,17 @@ nav a:hover {
 
 /* ================= DOCUMENTS ================= */
 
+
+.documents {
+    background: #f5f6f8;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
 .document-card {
     background: white;
     padding: 25px;
@@ -402,13 +413,22 @@ nav a:hover {
     gap: 15px;
 
     transition: 0.3s;
-    position: relative; /* важно для позиционирования tooltip */
+    position: relative; /* оставляем для tooltip */
 }
 
 .document-card:hover {
     border-color: #1769aa;
 }
 
+.document-icon {
+    font-size: 25px;
+}
+
+.document-card h3 {
+    font-size: 15px;
+}
+
+/* Всплывающая карточка */
 .document-tooltip {
     position: absolute;
     top: 110%; /* ниже карточки */
@@ -432,19 +452,13 @@ nav a:hover {
     visibility: visible;
     transform: translateY(0);
 }
-.document-tooltip {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: 0.3s;
-}
 
+/* Для мобильных (по клику) */
 .document-card.active .document-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
-
 
 
 /* ================= CONTACTS ================= */
