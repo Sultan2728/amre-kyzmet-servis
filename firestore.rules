@@ -24,5 +24,25 @@ service cloud.firestore {
       // Никто не может менять или удалять чужие отзывы через сайт
       allow update, delete: if false;
     }
+
+    // Новости и объявления: читать может кто угодно,
+    // писать — только администратор (вошедший по email).
+    match /news/{newsId} {
+      allow read: if true;
+      allow create, update: if
+        request.auth != null &&
+        request.auth.token.email == 'shaken.sultan.02@gmail.com' &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 0 &&
+        request.resource.data.title.size() <= 120 &&
+        request.resource.data.text is string &&
+        request.resource.data.text.size() > 0 &&
+        request.resource.data.text.size() <= 2000 &&
+        request.resource.data.image is string &&
+        request.resource.data.image.size() <= 600000;
+      allow delete: if
+        request.auth != null &&
+        request.auth.token.email == 'shaken.sultan.02@gmail.com';
+    }
   }
 }

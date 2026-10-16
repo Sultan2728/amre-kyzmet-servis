@@ -1,0 +1,31 @@
+.admin-body { background: #f5f6f8; min-height: 100vh; }
+.admin-wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+.admin-wrap h1 { font-size: 26px; margin-bottom: 18px; color: #1769aa; }
+.admin-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 22px; margin-bottom: 20px; }
+.admin-card h2 { font-size: 18px; margin-bottom: 14px; }
+.admin-card label { display: block; font-size: 14px; color: #444; margin-bottom: 14px; }
+.admin-card input[type=text], .admin-card input[type=email], .admin-card input[type=password],
+.admin-card textarea, .admin-card select, .admin-card input[type=file] {
+    display: block; width: 100%; margin-top: 6px; padding: 10px 12px; border: 1px solid #cfd8e0;
+    border-radius: 8px; font: inherit; font-size: 16px; background: #fff;
+}
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.admin-card label.admin-check { display: flex; align-items: center; gap: 8px; color: #c62828; font-weight: 600; }
+.admin-check input { width: 18px; height: 18px; }
+.admin-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; font-size: 14px; }
+.admin-top .btn { padding: 8px 16px; }
+.admin-link { color: #1769aa; margin-left: auto; }
+.admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-msg { margin-top: 12px; font-size: 14px; color: #c62828; }
+.admin-msg.ok { color: #2e7d32; }
+.admin-preview { margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+.admin-preview img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; }
+.admin-item { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid #eee; flex-wrap: wrap; }
+.admin-item:first-child { border-top: 0; }
+.admin-item-info { flex: 1 1 220px; min-width: 0; }
+.admin-item-info strong { display: block; overflow-wrap: anywhere; }
+.admin-item-info small { color: #777; }
+.admin-item-btns { display: flex; gap: 8px; }
+.admin-item-btns button { padding: 7px 14px; border-radius: 8px; border: 1px solid #cfd8e0; background: #fff; cursor: pointer; font: inherit; font-size: 14px; }
+.admin-item-btns .del { color: #c62828; border-color: #e8a7a2; }
+@media (max-width: 600px) { .admin-row { grid-template-columns: 1fr; } }

@@ -27,6 +27,8 @@
 
     <!-- ================= HEADER ================= -->
 
+    <div class="urgent-banner" id="urgentBanner" hidden></div>
+
     <header>
 
         <div class="header-container"> 
@@ -201,86 +203,10 @@
             </div>
 
 
-            <div class="news-grid">
+            <div class="news-filters" id="newsFilters" hidden></div>
 
-
-                <div class="news-card">
-
-                    <div class="news-image">
-                        📰
-                    </div>
-
-                    <div class="news-content">
-
-                        <div class="news-date">
-                            02.09.2026
-                        </div>
-
-                        <h3>
-                            Информация для жителей
-                        </h3>
-
-                        <p>
-                            Здесь будет размещаться важная информация
-                            от КСК.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="news-card">
-
-                    <div class="news-image">
-                        📢
-                    </div>
-
-                    <div class="news-content">
-
-                        <div class="news-date">
-                            01.09.2026
-                        </div>
-
-                        <h3>
-                            Объявление
-                        </h3>
-
-                        <p>
-                            Здесь можно размещать объявления
-                            и уведомления для жильцов.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="news-card">
-
-                    <div class="news-image">
-                        🏠
-                    </div>
-
-                    <div class="news-content">
-
-                        <div class="news-date">
-                            30.08.2026
-                        </div>
-
-                        <h3>
-                            Обслуживание дома
-                        </h3>
-
-                        <p>
-                            Информация о плановых работах
-                            и обслуживании.
-                        </p>
-
-                    </div>
-
-                </div>
-
+            <div class="news-grid" id="newsGrid">
+                <p class="news-empty">Загрузка новостей…</p>
             </div>
 
         </div>
@@ -495,6 +421,7 @@
     <script src="Js/qrcode.js"></script>
     <script src="Js/qr-init.js"></script>
     <script src="Js/reviews.js"></script>
+    <script src="Js/news.js"></script>
 
 </body>
 

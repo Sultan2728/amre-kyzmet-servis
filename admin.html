@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Админ-панель — Amre Kyzmet Servis</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/admin.css">
+</head>
+<body class="admin-body">
+
+<div class="admin-wrap">
+    <h1>Админ-панель</h1>
+
+    <!-- Вход -->
+    <form id="loginForm" class="admin-card">
+        <h2>Вход</h2>
+        <label>Email<input type="email" id="loginEmail" required autocomplete="username"></label>
+        <label>Пароль<input type="password" id="loginPass" required autocomplete="current-password"></label>
+        <button class="btn btn-primary" type="submit">Войти</button>
+        <p class="admin-msg" id="loginMsg"></p>
+    </form>
+
+    <!-- Панель -->
+    <div id="panel" hidden>
+        <div class="admin-top">
+            <span id="whoami"></span>
+            <button class="btn btn-light" id="logoutBtn" type="button">Выйти</button>
+            <a href="index.html" class="admin-link">← На сайт</a>
+        </div>
+
+        <form id="newsForm" class="admin-card">
+            <h2 id="formTitle">Новая публикация</h2>
+            <label>Заголовок<input type="text" id="nTitle" maxlength="120" required></label>
+            <label>Текст<textarea id="nText" rows="5" maxlength="2000" required></textarea></label>
+            <div class="admin-row">
+                <label>Тип
+                    <select id="nType">
+                        <option>Новость</option>
+                        <option>Объявление</option>
+                        <option>Работы</option>
+                        <option>Собрание</option>
+                    </select>
+                </label>
+                <label>ЖК (необязательно)
+                    <input type="text" id="nComplex" maxlength="60" list="complexList" placeholder="пусто = для всех ЖК">
+                    <datalist id="complexList"></datalist>
+                </label>
+            </div>
+            <label class="admin-check"><input type="checkbox" id="nUrgent"> Срочно (показать красную полосу над сайтом)</label>
+            <label>Фото (необязательно)<input type="file" id="nPhoto" accept="image/*"></label>
+            <div id="photoPreview" class="admin-preview" hidden>
+                <img id="photoImg" alt="">
+                <button type="button" class="btn btn-light" id="photoRemove">Убрать фото</button>
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-primary" type="submit" id="saveBtn">Опубликовать</button>
+                <button class="btn btn-light" type="button" id="cancelEdit" hidden>Отмена</button>
+            </div>
+            <p class="admin-msg" id="formMsg"></p>
+        </form>
+
+        <div class="admin-card">
+            <h2>Опубликовано</h2>
+            <div id="adminList"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="Js/firebase-init.js"></script>
+<script src="Js/admin.js"></script>
+</body>
+</html>
