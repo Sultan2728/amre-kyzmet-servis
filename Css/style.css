@@ -391,21 +391,10 @@ nav a:hover {
 
 /* ================= DOCUMENTS ================= */
 
-.documents {
-    background: #f5f6f8;
-}
-
-.documents-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
 .document-card {
     background: white;
     padding: 25px;
     border-radius: 10px;
-
     border: 1px solid #e4e4e4;
 
     display: flex;
@@ -413,81 +402,39 @@ nav a:hover {
     gap: 15px;
 
     transition: 0.3s;
+    position: relative; /* важно для позиционирования tooltip */
 }
 
 .document-card:hover {
     border-color: #1769aa;
 }
 
-.document-icon {
-    font-size: 25px;
-}
-
-.document-card h3 {
-    font-size: 15px;
-}
-
-
-/* Карточка для всплывающего списка */
-.document-card {
-    position: relative;
-    text-decoration: none;
-    color: #222;
-}
-
-/* Всплывающее окно */
 .document-tooltip {
     position: absolute;
-    top: calc(100% + 12px);
-    left: 50%;
-    transform: translate(-50%, 8px);
-
-    width: 300px;
-    max-width: 85vw;
-    padding: 20px;
-
+    top: 110%; /* ниже карточки */
+    left: 0;
+    width: 280px;
     background: #fff;
-    border: 1px solid #e4e4e4;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
-
-    transition: opacity 0.25s ease,
-                transform 0.25s ease,
-                visibility 0.25s ease;
-
-    z-index: 100;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
 }
 
-/* Заголовок окна */
-.document-tooltip h4 {
-    margin: 0 0 12px;
-    font-size: 16px;
-    color: #1769aa;
-}
-
-/* Список правил */
-.document-tooltip ul {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.document-tooltip li {
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* Появление при наведении */
-.document-card:hover .document-tooltip,
-.document-card:focus .document-tooltip {
+.document-card:hover .document-tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
 }
+
+
+
 /* ================= CONTACTS ================= */
 
 .contacts {
