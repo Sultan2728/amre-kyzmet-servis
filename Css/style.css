@@ -432,6 +432,18 @@ nav a:hover {
     visibility: visible;
     transform: translateY(0);
 }
+.document-tooltip {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: 0.3s;
+}
+
+.document-card.active .document-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 
 
